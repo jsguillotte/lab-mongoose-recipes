@@ -17,6 +17,28 @@ const manageRecipes = async () => {
 
     // Before adding any recipes to the database, let's remove all existing ones
     await Recipe.deleteMany();
+    let greekSalad = {title: 'Greek Salad', cuisine: "Mediterranean", duration: 20, creator: "People"}
+    let greekSaladDb = await Recipe.create(greekSalad)
+    
+
+    let someRecipe = await Recipe.find({title: 'Greek Salad'})
+    console.log(someRecipe)
+
+    let allRecipes = await Recipe.insertMany(data);
+    data.forEach(el => {
+      console.log(el.title)
+
+    })
+
+    let updateRecipe = await Recipe.findOneAndUpdate({title: "Rigatoni alla Genovese"}, {duration: 100})
+    let riggatoni = await Recipe.find({title: "Rigatoni alla Genovese"})
+    console.log(riggatoni, 'success')
+    
+    let deleteRecipe = await Recipe.deleteOne({title: "Carrot Cake"});
+    let carrotCake = await Recipe.find({title: 'Carrot Cake'})
+    console.log(carrotCake, "success")
+    
+    let dbDisconnect = await mongoose.connection.close(MONGODB_URI)
 
     // Run your code here, after you have insured that the connection was made
   } catch (error) {
